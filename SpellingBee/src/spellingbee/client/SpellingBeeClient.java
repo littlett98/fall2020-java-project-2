@@ -8,8 +8,11 @@ import javafx.scene.*;
 import javafx.scene.paint.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import spellingbee.network.Client;
 
 public class SpellingBeeClient extends Application {
+	
+	//private Client client = new Client();
 	
 	public static void main(String[] args) {
         launch(args);
@@ -24,7 +27,7 @@ public class SpellingBeeClient extends Application {
         
         VBox vBox = new VBox(tabPane);
 
-        //scene is associated with container, dimensions
+        // scene is associated with container, dimensions
       	Scene scene = new Scene(vBox, 1000, 300); 
       	scene.setFill(Color.BLACK);
         
