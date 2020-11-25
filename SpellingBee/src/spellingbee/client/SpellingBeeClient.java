@@ -12,7 +12,7 @@ import spellingbee.network.Client;
 
 public class SpellingBeeClient extends Application {
 	
-	//private Client client = new Client();
+	private Client client = new Client();
 	
 	public static void main(String[] args) {
         launch(args);
