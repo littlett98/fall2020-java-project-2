@@ -4,7 +4,7 @@ public interface ISpellingBeeGame {
 	
 	int getPointsForWord(String attemt);
 	
-	String getMessage(String attemp);
+	String getMessage(String attempt);
 	
 	String getAllLetters();
 	

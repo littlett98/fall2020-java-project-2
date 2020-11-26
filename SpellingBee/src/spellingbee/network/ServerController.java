@@ -1,5 +1,6 @@
 package spellingbee.network;
 
+import spellingbee.client.ISpellingBeeGame;
 import spellingbee.server.*;
 
 /**
@@ -33,7 +34,7 @@ public class ServerController {
 		 * 	// client has requested getCenter. Call the getCenter method which returns a String of 7 letters
 		 *      return spellingBee.getCenter();
 		 * }
-		 * else if ( ..... )
+		 * else if ( ..... )*/
 		return null;
 	}
 }
