@@ -2,7 +2,7 @@ package spellingbee.client;
 
 public interface ISpellingBeeGame {
 	
-	int getPointsForWord(String attemt);
+	int getPointsForWord(String attempt);
 	
 	String getMessage(String attempt);
 	
