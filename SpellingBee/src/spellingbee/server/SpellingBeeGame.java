@@ -103,11 +103,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	public int[] getBrackets() {
 		int maxPoints = 0;
 		for (String word: possibleWords) {
-			for (int i = 0; i < allLetters.length(); i++) {
-				if (word.indexOf(allLetters.charAt(i)) == -1) {
-					continue;
-				}
-			}
+			maxPoints += getPointsForWord(word);
 		}
 		int[] brackets = new int[5];
 		brackets[0] = (int) (maxPoints * 0.25);
