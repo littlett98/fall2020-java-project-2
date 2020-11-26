@@ -9,6 +9,7 @@ import javafx.scene.paint.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import spellingbee.network.Client;
+import spellingbee.network.Server;
 import spellingbee.server.*;
 
 public class SpellingBeeClient extends Application {
@@ -16,14 +17,15 @@ public class SpellingBeeClient extends Application {
 	private Client client = new Client();
 	
 	public static void main(String[] args) {
-        //launch(args);
+        launch(args);
     }
 	
 	public void start(Stage stage) {
 		
 		TabPane tabPane = new TabPane();
 		// Trevor (Obi-Wan) tab
-        Tab score = new Tab("Score", new Label("Show all score related values"));
+		ScoreTab score = new ScoreTab(client);
+        //Tab score = new Tab("Score", new Label("Show all score related values"));
         tabPane.getTabs().add(score);
         
         VBox vBox = new VBox(tabPane);
