@@ -3,8 +3,9 @@ package spellingbee.server;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.Random;
 import java.util.Scanner;
 
 import spellingbee.client.ISpellingBeeGame;
@@ -18,12 +19,21 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	private static HashSet<String> possibleWords = createWordsFromFile("\\datafiles\\english.txt");
 	
 	public SpellingBeeGame() {
-		
+		this.allLetters = getRandomLetters();
+		centerLetter = allLetters.charAt(3);
+		score = 0;
 	}
 	
 	public SpellingBeeGame(String letters) {
 		this.allLetters = letters;
-		
+		centerLetter = allLetters.charAt(3);
+		score = 0;
+	}
+	
+	public String getRandomLetters() {
+		Random rand = new Random();
+		ArrayList<String> letterCombinations = new ArrayList<String>(createWordsFromFile("\\datafiles\\letterCombinations.txt"));
+		return letterCombinations.get(rand.nextInt(letterCombinations.size()));
 	}
 	
 	public static HashSet<String> createWordsFromFile(String path) {
