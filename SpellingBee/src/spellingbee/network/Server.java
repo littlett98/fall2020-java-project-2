@@ -14,7 +14,7 @@ public class Server {
 	 * The port number that the server will run on. In the (unlikely) event that this port is already in use, you should change this to a different number.
 	 * Note that the port *will* be in use if you don't terminate the server program (by hitting the stop button in Eclipse!)
 	 */
-	public static final int PORT_NUMBER = 4448;
+	public static final int PORT_NUMBER = 52545;
 	
 	public static void main(String[] args) throws Exception {
 		System.out.println("Starting the server");
