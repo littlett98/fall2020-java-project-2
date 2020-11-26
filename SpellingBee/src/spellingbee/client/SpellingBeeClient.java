@@ -1,7 +1,5 @@
 package spellingbee.client;
 
-import java.io.FileNotFoundException;
-
 import javafx.application.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,10 +15,8 @@ public class SpellingBeeClient extends Application {
 	
 	private Client client = new Client();
 	
-	public static void main(String[] args) throws FileNotFoundException {
-        launch(args);
-        SpellingBeeGame sbg = new SpellingBeeGame();
-        sbg.createWordsFromFile("C:\\Users\\mccub\\Documents\\420-310 (Java 3)\\fall2020javaproject2\\english.txt");
+	public static void main(String[] args) {
+        //launch(args);
     }
 	
 	public void start(Stage stage) {

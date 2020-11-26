@@ -24,17 +24,61 @@ public class ServerController {
 	 * @return The String to return to the client
 	 */
 	public String action(String inputLine) {
-		/* Your code goes here!!!!
-		 * Note: If you want to preserve information between method calls, then you MUST
-		 * store it into private fields.
-		 * You should use the spellingBee object to make various calls and here is where your communication
-		 * code/protocol should go.
-		 * For example, based on the samples in the assignment:
-		 * if (inputLine.equals("getCenter")) {
-		 * 	// client has requested getCenter. Call the getCenter method which returns a String of 7 letters
-		 *      return spellingBee.getCenter();
-		 * }
-		 * else if ( ..... )*/
-		return null;
+		String[] args = inputLine.split(" ");
+		if (args[0].equals("getAllLetters")) {
+			String allLetters = spellingBee.getAllLetters();
+			return allLetters;
+		}
+		else if (args[0].equals("getCenter")) {
+			char middle = spellingBee.getCenterLetter();
+			String center = "" + middle;
+			return center;
+		}
+		else if (args[0].equals("getAllExceptCenter")) {
+			String allLetters = spellingBee.getAllLetters();
+			char middle = spellingBee.getCenterLetter();
+			String allNotMiddle = "";
+			for (int i = 0; i < allLetters.length(); i++) {
+				if (allLetters.charAt(i) != middle) {
+					allNotMiddle += allLetters.charAt(i);
+				}
+			}
+			return allNotMiddle;
+		}
+		else if (args[0].equals("getPointsForWord")) {
+			int points = spellingBee.getPointsForWord(args[1]);
+			String p = "" + points;
+			return p;
+		}
+		else if (args[0].equals("getMessage")) {
+			String msg = spellingBee.getMessage(args[1]);
+			return msg;
+		}
+		else if (args[0].equals("getScore")) {
+			int score = spellingBee.getScore();
+			String s = "" + score;
+			return s;
+		}
+		else if (args[0].equals("getBrackets")) {
+			int[] brackets = spellingBee.getBrackets();
+			String b = "";
+			for (int i = 0; i < brackets.length; i++) {
+				if (brackets.length - 1 == i) {
+					b += brackets[i]; 
+				}
+				else {
+					b += brackets[i] + " "; 
+				}
+			}
+			// This will return a String with spaces in it so that you can turn it back into an int[] array if you need
+			return b;
+		}
+		else if (args[0].equals("wordCheck")) {
+			String msg = spellingBee.getMessage(args[1]);
+			int points = spellingBee.getPointsForWord(args[1]);
+			String wc = msg + " " + points;
+			return wc;
+		}
+		return "input did nothing";
 	}
 }

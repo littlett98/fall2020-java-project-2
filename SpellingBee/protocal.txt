@@ -1,0 +1,47 @@
+getAllLetters
+	Returns a String with all the letters the user can choose from
+	The input to the action method should look like this:
+		getAllLetters
+
+getCenter
+	Returns a String with only the center letter in it
+	The input to the action method should look like this:
+		getCenter
+
+getAllExceptCenter
+	Returns a String with only the letters that are not the center letter
+	The input to the action method should look like this:
+		getAllExceptCenter
+
+getPointsForWord
+	Returns a String with the amount of points a word is worth
+	The input to the action method should look like this:
+		getPointsForWord hello
+	where hello is the word that the user attempted
+
+getMessage
+	Returns a String with the message the client would show after a guess
+	The input to the action method should look like this:
+		getMessage hello
+	where hello is the word that the user attempted
+
+getScore
+	Returns a String with the players current score
+	The input to the action method should look like this:
+		getScore
+
+getBrackets
+	Returns a String with the brackets for points in them
+	Each bracket is seperated by a space so that the client can turn them back into an array if they want to
+	The input to the action method should look like this:
+		getBrackets
+
+wordCheck
+	Returns a String with whether or not a word is accepted and how many points it was worth
+	The return String format looks like this:
+		message points
+	The input to the action method should look like this:
+		wordCheck hello
+	where hello is the word that the user attempted
+
+**The protocol returns input did nothing if the input lead to no commands
