@@ -23,15 +23,21 @@ public class SpellingBeeClient extends Application {
 	public void start(Stage stage) {
 		
 		TabPane tabPane = new TabPane();
-		// Trevor (Obi-Wan) tab
 		ScoreTab score = new ScoreTab(client);
-        //Tab score = new Tab("Score", new Label("Show all score related values"));
+		PlaceholderTab placeholder = new PlaceholderTab(client);
+		placeholder.getScoreField().setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				score.refresh();
+			}
+		});
         tabPane.getTabs().add(score);
+        tabPane.getTabs().add(placeholder);
         
         VBox vBox = new VBox(tabPane);
 
         // scene is associated with container, dimensions
-      	Scene scene = new Scene(vBox, 1000, 300); 
+      	Scene scene = new Scene(vBox, 500, 300); 
       	scene.setFill(Color.BLACK);
         
         stage.setScene(scene);

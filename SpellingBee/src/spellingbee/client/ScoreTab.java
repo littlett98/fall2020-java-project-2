@@ -33,14 +33,21 @@ public class ScoreTab extends Tab{
 		Text good = new Text("Good");
 		Text gettingStarted = new Text("Getting Started");
 		Text scoreText = new Text("Current Score");
+		queenBee.setFill(Color.GREY);
+		genius.setFill(Color.GREY);
+		amazing.setFill(Color.GREY);
+		good.setFill(Color.GREY);
+		gettingStarted.setFill(Color.GREY);
 		
 		Text maxBracket = new Text("" + brackets[4]);
 		Text highBracket = new Text("" + brackets[3]);
 		Text middleBracket = new Text("" + brackets[2]);
 		Text lowBracket = new Text("" + brackets[1]);
 		Text lowestBracket = new Text("" + brackets[0]);
-		Text score = new Text("" + currentScore);	
+		Text score = new Text("" + currentScore);
 		score.setFill(Color.RED);
+		
+		checkCurrentBracket(currentScore, brackets);
 		
 		gp.add(queenBee, 0, 0);	gp.add(maxBracket, 1, 0);
 		gp.add(genius, 0, 1); gp.add(highBracket, 1, 1);
@@ -52,8 +59,16 @@ public class ScoreTab extends Tab{
 		return gp;
 	}
 	
+	public void checkCurrentBracket(int currentScore, int[] brackets) {
+		for (int i = 0; i < brackets.length; i++) {
+			if (currentScore > brackets[i]) {
+				
+			}
+		}
+	}
+	
 	public void refresh() {
-		
+		int currentScore = Integer.parseInt(client.sendAndWaitMessage("getScore"));
 	}
 	
 	public int[] unpackBrackets(String b) {
