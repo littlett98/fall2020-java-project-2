@@ -2,8 +2,13 @@ package spellingbee.server;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -18,7 +23,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	private char centerLetter;
 	private int score;
 	private HashSet<String> wordsFound = new HashSet<String>();
-	private static HashSet<String> possibleWords = createWordsFromFile("\\datafiles\\english.txt");
+	private static HashSet<String> possibleWords = createWordsFromFile("datafiles\\english36.txt");
 	
 	/** 
 	 * Constructor method to create a new SpellingBeeGame.
@@ -51,7 +56,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	public String getRandomLetters() {
 		Random rand = new Random();
-		ArrayList<String> letterCombinations = new ArrayList<String>(createWordsFromFile("\\datafiles\\letterCombinations.txt"));
+		ArrayList<String> letterCombinations = new ArrayList<String>(createWordsFromFile("datafiles\\combos.txt"));
 		return letterCombinations.get(rand.nextInt(letterCombinations.size()));
 	}
 	
@@ -61,21 +66,46 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 * @return HashSet<String> of all the values within the given file
 	 */
 	public static HashSet<String> createWordsFromFile(String path) {
-		HashSet<String> allWords = new HashSet<String>();
+		List<String> lines = null;
 		try {
-			File dictionary = new File(path);
-			Scanner input = new Scanner(dictionary);
-			while (input.hasNext()) {
-				allWords.add(input.nextLine());
-			}
-			input.close();
-		} catch (FileNotFoundException e) {
+			Path p = Paths.get(path);
+			lines = Files.readAllLines(p);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return allWords;
+		for (String word: lines) {
+			if (checkLetterCount(word) == false) {
+				lines.remove(lines.indexOf(word));
+			}
+		}
+		return new HashSet<String>(lines);
 	}
 	
+	/**
+	 * This checks the amount of different letters within a word.
+	 * It returns true if the amount of letters is less than or equal to 7
+	 * Otherwise, the word cannot be discovered by SpellingBeeGame using only 7 letters
+	 * and makes the max points calculation inaccurate because the user will never be able
+	 * to guess words with 8 or more unique letters
+	 * @param word String you want to count the amount of letters
+	 * @return true or false depending on how many unique letters in a word
+	 */
+	public static boolean checkLetterCount(String word) {
+		int letterCount = 0;
+		for (char letter = 'a'; letter <= 'z'; letter++) {
+			for (int i = 0; i < word.length(); i++) {
+				if (word.toLowerCase().charAt(i) == letter) {
+					letterCount++;
+				}
+			}
+		}
+		if (letterCount <= 7) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 	/**
 	 * This method determines how many points a user gets based on their word
 	 * @param attempt String of the attempt the user input
@@ -84,14 +114,17 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	@Override
 	public int getPointsForWord(String attempt) {
 		int wordLength = attempt.length();
-		if (wordLength == 4) {
+		if (wordLength < 4) {
+			return 0;
+		}
+		else if (wordLength == 4) {
 			return 1;
 		}
 		else if (checkAttemptContainsAllLetters(attempt)) {
 			return 7 + wordLength;
 		}
 		else if (wordLength > 4) {
-			return attempt.length();
+			return wordLength;
 		}
 		return 0;
 	}
@@ -105,7 +138,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 		if (attempt.length() < allLetters.length()) {
 			return false;
 		}
-		for (int i = 0; i < attempt.length(); i++) {
+		for (int i = 0; i < allLetters.length(); i++) {
 			// If the current char in allLetters isn't found in the attempt then they didn't use all the letters
 			if (attempt.indexOf(allLetters.charAt(i)) == -1) {
 				return false;
