@@ -4,7 +4,12 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import spellingbee.network.Client;
-
+/**
+ * For testing purposes with ScoreTab
+ * Remove from SpellingBeeClient for release.
+ * @author Trevor McCubbin
+ *
+ */
 public class PlaceholderTab extends Tab{
 	
 	private Client client;

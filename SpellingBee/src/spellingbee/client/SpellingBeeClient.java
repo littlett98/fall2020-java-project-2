@@ -12,6 +12,11 @@ import spellingbee.network.Client;
 import spellingbee.network.Server;
 import spellingbee.server.*;
 
+/**
+ * 
+ * @author Trevor McCubbin
+ * @author Jamin Huang
+ */
 public class SpellingBeeClient extends Application {
 	
 	private Client client = new Client();

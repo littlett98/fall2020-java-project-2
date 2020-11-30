@@ -20,6 +20,7 @@ public class ServerController {
 	 * It takes as input a String which is the request coming from the client. 
 	 * It then does some actions on the server (using the ISpellingBeeGame object)
 	 * and returns a String representing the message to send to the client
+	 * @author Trevor McCubbin
 	 * @param inputLine The String from the client
 	 * @return The String to return to the client
 	 */
