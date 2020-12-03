@@ -65,21 +65,20 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 * @return HashSet<String> of all the values within the given file
 	 */
 	public static HashSet<String> createWordsFromFile(String path) {
-		List<String> lines = null;
-		List<String> toBeRemoved = new ArrayList<String>();
+		HashSet<String> lines = null;
+		HashSet<String> toBeReturned = new HashSet<String>();
 		try {
 			Path p = Paths.get(path);
-			lines = Files.readAllLines(p);
+			lines = new HashSet<String>(Files.readAllLines(p));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		for (String word: lines) {
-			if (checkLetterCount(word) == false) {
-				toBeRemoved.add(word);
+			if (checkLetterCount(word)) {
+				toBeReturned.add(word);
 			}
 		}
-		lines.removeAll(toBeRemoved);
-		return new HashSet<String>(lines);
+		return toBeReturned;
 	}
 	
 	/**
