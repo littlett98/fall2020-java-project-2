@@ -74,8 +74,11 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 			e.printStackTrace();
 		}
 		for (String word: lines) {
-			if (checkLetterCount(word)) {
-				toBeReturned.add(word);
+			// removes proper nouns since proper nouns start with a capital
+			if (word.charAt(0) >= 'a' && word.charAt(0) <= 'z') {
+				if (checkLetterCount(word)) {
+					toBeReturned.add(word);
+				}
 			}
 		}
 		return toBeReturned;
