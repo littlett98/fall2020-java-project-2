@@ -20,7 +20,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	private char centerLetter;
 	private int score;
 	private HashSet<String> wordsFound = new HashSet<String>();
-	private static HashSet<String> possibleWords = createWordsFromFile("datafiles\\english36.txt");
+	private static HashSet<String> possibleWords;
 	
 	/** 
 	 * Constructor method to create a new SpellingBeeGame.
@@ -30,6 +30,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	public SpellingBeeGame() {
 		this.allLetters = getRandomLetters();
+		possibleWords = createWordsFromFile("datafiles\\english36.txt");
 		centerLetter = allLetters.charAt(3);
 		score = 0;
 	}
@@ -42,6 +43,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	public SpellingBeeGame(String letters) {
 		this.allLetters = letters;
+		possibleWords = createWordsFromFile("datafiles\\english36.txt");
 		centerLetter = allLetters.charAt(3);
 		score = 0;
 	}
@@ -64,6 +66,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	public static HashSet<String> createWordsFromFile(String path) {
 		List<String> lines = null;
+		List<String> toBeRemoved = new ArrayList<String>();
 		try {
 			Path p = Paths.get(path);
 			lines = Files.readAllLines(p);
@@ -72,8 +75,12 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 		}
 		for (String word: lines) {
 			if (checkLetterCount(word) == false) {
-				lines.remove(lines.indexOf(word));
+				toBeRemoved.add(word);
 			}
+		}
+		lines.removeAll(toBeRemoved);
+		for (String word: toBeRemoved) {
+			System.out.println(word);
 		}
 		return new HashSet<String>(lines);
 	}
@@ -93,6 +100,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 			for (int i = 0; i < word.length(); i++) {
 				if (word.toLowerCase().charAt(i) == letter) {
 					letterCount++;
+					break;
 				}
 			}
 		}
@@ -110,6 +118,10 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	@Override
 	public int getPointsForWord(String attempt) {
+		// if it isn't a valid word for the letters you get no points
+		if (allowedWord(attempt) == false) {
+			return 0;
+		}
 		int wordLength = attempt.length();
 		if (wordLength < 4) {
 			return 0;
@@ -124,6 +136,20 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 			return wordLength;
 		}
 		return 0;
+	}
+	
+	/**
+	 * This method tests to see if a word is allowed and only uses letters from the given letters.
+	 * @param word the word the user inputs into the game
+	 * @return returns true if the word contains only letters from the allowed letters
+	 */
+	public boolean allowedWord(String word) {
+		for (int i = 0; i < word.length(); i++) {
+			if (allLetters.indexOf(word.charAt(i)) == -1) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	/**
@@ -211,5 +237,4 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 		brackets[4] = maxPoints;
 		return brackets;
 	}
-	
 }
