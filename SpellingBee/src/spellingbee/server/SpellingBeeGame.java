@@ -30,7 +30,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	public SpellingBeeGame() {
 		this.allLetters = getRandomLetters();
-		possibleWords = createWordsFromFile("datafiles\\english36.txt");
+		possibleWords = createWordsFromFile("datafiles\\english.txt");
 		centerLetter = allLetters.charAt(3);
 		score = 0;
 	}
@@ -43,7 +43,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	public SpellingBeeGame(String letters) {
 		this.allLetters = letters;
-		possibleWords = createWordsFromFile("datafiles\\english36.txt");
+		possibleWords = createWordsFromFile("datafiles\\english.txt");
 		centerLetter = allLetters.charAt(3);
 		score = 0;
 	}
@@ -55,7 +55,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	public String getRandomLetters() {
 		Random rand = new Random();
-		ArrayList<String> letterCombinations = new ArrayList<String>(createWordsFromFile("datafiles\\combos.txt"));
+		ArrayList<String> letterCombinations = new ArrayList<String>(createWordsFromFile("datafiles\\letterCombinations.txt"));
 		return letterCombinations.get(rand.nextInt(letterCombinations.size()));
 	}
 	
@@ -79,9 +79,6 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 			}
 		}
 		lines.removeAll(toBeRemoved);
-		for (String word: toBeRemoved) {
-			System.out.println(word);
-		}
 		return new HashSet<String>(lines);
 	}
 	
@@ -118,12 +115,12 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	@Override
 	public int getPointsForWord(String attempt) {
-		// if it isn't a valid word for the letters you get no points
-		if (allowedWord(attempt) == false) {
-			return 0;
-		}
 		int wordLength = attempt.length();
 		if (wordLength < 4) {
+			return 0;
+		}
+		// if it isn't a valid word for the letters you get no points
+		else if (allowedWord(attempt) == false) {
 			return 0;
 		}
 		else if (wordLength == 4) {
@@ -149,6 +146,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 				return false;
 			}
 		}
+		wordsFound.add(word);
 		return true;
 	}
 	
@@ -178,6 +176,9 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	@Override
 	public String getMessage(String attempt) {
+		if (wordsFound.contains(attempt)) {
+			return "You have already guessed this word";
+		}
 		if (attempt.length() < 4) {
 			return "Input word is too short";
 		}
