@@ -1,4 +1,9 @@
 package spellingbee.client;
+/**
+ * 
+ * 
+ * @author Jamin Huang
+ */
 
 public class SimpleSpellingBeeGame implements ISpellingBeeGame{
 
