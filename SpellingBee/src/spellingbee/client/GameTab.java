@@ -46,6 +46,7 @@ public class GameTab extends Tab{
 			buttons.getChildren().add(b);
 		}
 		Button bcenter=new Button(center);
+		bcenter.setTextFill(Color.RED);
 		buttons.getChildren().add(bcenter);
 		
 		info.getChildren().addAll(msg,score);
