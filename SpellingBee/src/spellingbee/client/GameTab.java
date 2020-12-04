@@ -37,6 +37,10 @@ public class GameTab extends Tab{
 		HBox info=new HBox();
 		TextField msg=new TextField();
 		TextField score=new TextField();
+		HBox textaction=new HBox();
+		Button delete=new Button("Delete");
+		Button clear=new Button("Clear");
+		
 		
 		String letters=client.sendAndWaitMessage("getAllExceptCenter");
 		String center=client.sendAndWaitMessage("getCenter");
