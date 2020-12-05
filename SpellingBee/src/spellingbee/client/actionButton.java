@@ -5,7 +5,11 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import spellingbee.network.Client;
-
+/**
+ * 
+ * 
+ * @author Jamin Huang
+ */
 public class actionButton implements EventHandler<ActionEvent>{
 	private static TextField answer;
 	private static TextField msg;
@@ -13,6 +17,10 @@ public class actionButton implements EventHandler<ActionEvent>{
 	private static Client c;
 	private Button b;
 	@Override
+	/**
+	 * Handle the actions
+	 * @param ActionEvent
+	 */
 	public void handle(ActionEvent e) {
 		if(b.getText().equals("Submit")) {
 			msg.setText(c.sendAndWaitMessage("wordCheck "+answer.getText()));
@@ -35,9 +43,17 @@ public class actionButton implements EventHandler<ActionEvent>{
 			answer.setText(answer.getText()+b.getText());
 		}
 	}
+	/**
+	 * OverLoaded constructor
+	 * @param Button b
+	 */
 	public actionButton(Button b) {
 		this.b=b;
 	}
+	/**
+	 * OverLoaded constructor, sets up static fields
+	 * @param TextFields answer,msg,score and Client c
+	 */
 	public actionButton(TextField answer, TextField msg, TextField score,Client c) {
 		actionButton.answer=answer;
 		actionButton.msg=msg;

@@ -15,7 +15,6 @@ import javafx.scene.layout.*;
 
 public class GameTab extends Tab{
 	private Client client;
-	private TextField tf;
 	
 	/**
 	 * GameTab constructor
@@ -27,7 +26,10 @@ public class GameTab extends Tab{
 		client=o;
 		this.setContent(box());
 	}
-	
+	/**
+	 * Returns a VBox that sets up all the buttons, textfields which will end up as the gametab
+	 * @return VBox
+	 */
 	public VBox box() {
 		VBox vbox=new VBox();
 		HBox buttons=new HBox();
@@ -69,12 +71,8 @@ public class GameTab extends Tab{
 		textaction.getChildren().addAll(delete,clear,submit);
 		info.getChildren().addAll(msg,score);
 		vbox.getChildren().addAll(buttons,answer,textaction,info);
-		
-		tf=msg;
-		
+				
 		return vbox;
 	}
-	public TextField getScoreField() {
-		return tf;
-	}
+
 }
