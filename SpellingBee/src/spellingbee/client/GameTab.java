@@ -2,10 +2,7 @@ package spellingbee.client;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import spellingbee.network.Client;
-import javafx.stage.*;
-import javafx.scene.*;
 import javafx.scene.paint.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -18,6 +15,7 @@ import javafx.scene.layout.*;
 
 public class GameTab extends Tab{
 	private Client client;
+	private TextField tf;
 	
 	/**
 	 * GameTab constructor
@@ -29,34 +27,54 @@ public class GameTab extends Tab{
 		client=o;
 		this.setContent(box());
 	}
+	
 	public VBox box() {
 		VBox vbox=new VBox();
 		HBox buttons=new HBox();
-		Button submit=new Button("Submit");
-		TextField answer=new TextField();
 		HBox info=new HBox();
-		TextField msg=new TextField();
-		TextField score=new TextField();
+		TextField msg=new TextField("Start!");
+		msg.setPrefWidth(400);
+		TextField score=new TextField("0");
+		score.setPrefWidth(80);
 		HBox textaction=new HBox();
-		Button delete=new Button("Delete");
-		Button clear=new Button("Clear");
+		TextField answer=new TextField();
+		actionButton astatics=new actionButton(answer,msg,score,client);
+		answer.setOnAction(astatics);
 		
+		Button submit=new Button("Submit");
+		actionButton asubmit=new actionButton(submit);
+		submit.setOnAction(asubmit);
+		Button delete=new Button("Delete");
+		actionButton adelete=new actionButton(delete);
+		delete.setOnAction(adelete);
+		Button clear=new Button("Clear");
+		actionButton aclear=new actionButton(clear);
+		clear.setOnAction(aclear);
 		
 		String letters=client.sendAndWaitMessage("getAllExceptCenter");
 		String center=client.sendAndWaitMessage("getCenter");
 			
 		for(int i=0;i<letters.length()-1;i++) {
 			Button b=new Button(""+letters.charAt(i));
+			actionButton ab=new actionButton(b);
+			b.setOnAction(ab);
 			buttons.getChildren().add(b);
 		}
 		Button bcenter=new Button(center);
 		bcenter.setTextFill(Color.RED);
+		actionButton ab=new actionButton(bcenter);
+		bcenter.setOnAction(ab);
 		buttons.getChildren().add(bcenter);
 		
+		textaction.getChildren().addAll(delete,clear,submit);
 		info.getChildren().addAll(msg,score);
+		vbox.getChildren().addAll(buttons,answer,textaction,info);
 		
-		vbox.getChildren().addAll(buttons,answer,submit,info);
+		tf=msg;
 		
 		return vbox;
+	}
+	public TextField getScoreField() {
+		return tf;
 	}
 }

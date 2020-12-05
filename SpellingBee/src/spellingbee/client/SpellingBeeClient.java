@@ -29,15 +29,15 @@ public class SpellingBeeClient extends Application {
 		
 		TabPane tabPane = new TabPane();
 		ScoreTab score = new ScoreTab(client);
-		PlaceholderTab placeholder = new PlaceholderTab(client);
-		placeholder.getScoreField().setOnAction(new EventHandler<ActionEvent>() {
+		GameTab gameTab = new GameTab(client);
+		gameTab.getScoreField().setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 				score.refresh();
 			}
 		});
         tabPane.getTabs().add(score);
-        tabPane.getTabs().add(placeholder);
+        tabPane.getTabs().add(gameTab);
         
         VBox vBox = new VBox(tabPane);
 
