@@ -148,7 +148,6 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 				return false;
 			}
 		}
-		wordsFound.add(word);
 		return true;
 	}
 	
@@ -189,6 +188,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 				return "Rejected because the center letter isn't included in the input word";
 			}
 			else if (word.equals(attempt)) {
+				wordsFound.add(word);
 				return "Good, word exists";
 			}
 		}
