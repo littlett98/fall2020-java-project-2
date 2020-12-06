@@ -16,6 +16,7 @@ import javafx.scene.layout.*;
 public class GameTab extends Tab{
 	private Client client;
 	
+	TextField score;
 	/**
 	 * GameTab constructor
 	 * @param Client o is given to GameTab
@@ -36,7 +37,7 @@ public class GameTab extends Tab{
 		HBox info=new HBox();
 		TextField msg=new TextField("Start!");
 		msg.setPrefWidth(400);
-		TextField score=new TextField("0");
+		score=new TextField("0");
 		score.setPrefWidth(80);
 		HBox textaction=new HBox();
 		TextField answer=new TextField();
@@ -74,5 +75,8 @@ public class GameTab extends Tab{
 				
 		return vbox;
 	}
-
+	
+	public TextField getScoreField() {
+		return score;
+	}
 }
