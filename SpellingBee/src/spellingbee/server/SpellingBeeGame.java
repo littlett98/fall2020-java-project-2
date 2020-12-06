@@ -118,20 +118,22 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	@Override
 	public int getPointsForWord(String attempt) {
 		int wordLength = attempt.length();
-		if (wordLength < 4) {
-			return 0;
-		}
-		// if it isn't a valid word for the letters you get no points
-		else if (allowedWord(attempt) == false) {
+		// if the word is less than 4 letters long or contains letters that are not allowed
+		// or doesn't include the centerLetter then the user gets 0 points
+		if (wordLength < 4 || allowedWord(attempt) == false) {
 			return 0;
 		}
 		else if (wordLength == 4) {
+			this.score += 1;
 			return 1;
 		}
+		// if the word is a panagram the user gets a bonus 7 points
 		else if (checkAttemptContainsAllLetters(attempt)) {
+			this.score += 7 + wordLength;
 			return 7 + wordLength;
 		}
 		else if (wordLength > 4) {
+			this.score += wordLength;
 			return wordLength;
 		}
 		return 0;
@@ -144,7 +146,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	public boolean allowedWord(String word) {
 		for (int i = 0; i < word.length(); i++) {
-			if (allLetters.indexOf(word.charAt(i)) == -1) {
+			if (word.indexOf(centerLetter) == -1 || allLetters.indexOf(word.charAt(i)) == -1) {
 				return false;
 			}
 		}
@@ -231,6 +233,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 		int maxPoints = 0;
 		for (String word: possibleWords) {
 			maxPoints += getPointsForWord(word);
+			this.score = 0;
 		}
 		int[] brackets = new int[5];
 		brackets[0] = (int) (maxPoints * 0.25);
