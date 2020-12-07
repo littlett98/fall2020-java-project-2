@@ -119,8 +119,9 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	public int getPointsForWord(String attempt) {
 		int wordLength = attempt.length();
 		// if the word is less than 4 letters long or contains letters that are not allowed
-		// or doesn't include the centerLetter then the user gets 0 points
-		if (wordLength < 4 || allowedWord(attempt) == false) {
+		// or doesn't include the centerLetter
+		// or the word was already guessed the user gets 0 points
+		if (wordLength < 4 || allowedWord(attempt) == false || wordsFound.contains(attempt)) {
 			return 0;
 		}
 		else if (wordLength == 4) {
@@ -190,7 +191,6 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 				return "Rejected because the center letter isn't included in the input word";
 			}
 			else if (word.equals(attempt)) {
-				wordsFound.add(word);
 				return "Good, word exists";
 			}
 		}
@@ -242,5 +242,16 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 		brackets[3] = (int) (maxPoints * 0.90);
 		brackets[4] = maxPoints;
 		return brackets;
+	}
+	
+	/**
+	 * This method takes as input the word the user guessed an adds it to the wordsFound hashset
+	 * if the word is allowed by the rules
+	 * @param word the word the user guessed
+	 */
+	public void addGuessedWord(String word) {
+		if (allowedWord(word)) {
+			wordsFound.add(word);
+		}
 	}
 }
