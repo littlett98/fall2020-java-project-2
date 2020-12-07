@@ -37,7 +37,8 @@ getBrackets
 		getBrackets
 
 wordCheck
-	Returns a String with whether or not a word is accepted and how many points it was worth
+	Returns a String with whether or not a word is accepted and how many points it was worth.
+	Once that is done it adds the word to the wordsFound hashset
 	The return String format looks like this:
 		message points
 	The input to the action method should look like this:

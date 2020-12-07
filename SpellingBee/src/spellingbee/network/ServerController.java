@@ -77,6 +77,7 @@ public class ServerController {
 		else if (args[0].equals("wordCheck")) {
 			String msg = spellingBee.getMessage(args[1]);
 			int points = spellingBee.getPointsForWord(args[1]);
+			((SpellingBeeGame) spellingBee).addGuessedWord(args[1]);
 			String wc = msg + " " + points;
 			return wc;
 		}
