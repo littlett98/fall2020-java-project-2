@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
 import spellingbee.client.ISpellingBeeGame;
@@ -117,11 +116,13 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	@Override
 	public int getPointsForWord(String attempt) {
+		
 		int wordLength = attempt.length();
 		// if the word is less than 4 letters long or contains letters that are not allowed
 		// or doesn't include the centerLetter
-		// or the word was already guessed the user gets 0 points
-		if (wordLength < 4 || allowedWord(attempt) == false || wordsFound.contains(attempt)) {
+		// or the word was already guessed 
+		// or the dictionary does not include that word the user gets 0 points
+		if (wordLength < 4 || allowedWord(attempt) == false || wordsFound.contains(attempt) || !possibleWords.contains(attempt)) {
 			return 0;
 		}
 		else if (wordLength == 4) {
@@ -183,18 +184,18 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 		if (wordsFound.contains(attempt)) {
 			return "You have already guessed this word";
 		}
-		if (attempt.length() < 4) {
+		else if (attempt.length() < 4) {
 			return "Input word is too short";
 		}
+		else if (attempt.indexOf(centerLetter) == -1){
+			return "Rejected because the center letter isn't included in the input word";
+		}
 		for (String word: possibleWords) {
-			if (attempt.indexOf(centerLetter) == -1) {
-				return "Rejected because the center letter isn't included in the input word";
-			}
-			else if (word.equals(attempt)) {
+			if (word.equals(attempt)) {
 				return "Good, word exists";
 			}
 		}
-		return "Something broke for: " + attempt;
+		return "This word is not in the given dictionary: " + attempt;
 	}
 	
 	/**

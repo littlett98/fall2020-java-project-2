@@ -3,16 +3,12 @@ package spellingbee.client;
 import javafx.application.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.paint.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import spellingbee.network.Client;
-import spellingbee.network.Server;
-import spellingbee.server.*;
 
 /**
  * 
