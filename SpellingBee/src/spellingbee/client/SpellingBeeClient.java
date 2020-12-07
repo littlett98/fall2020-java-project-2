@@ -1,6 +1,8 @@
 package spellingbee.client;
 
 import javafx.application.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.*;
@@ -31,8 +33,14 @@ public class SpellingBeeClient extends Application {
 		ScoreTab score = new ScoreTab(client);
 		GameTab gameTab = new GameTab(client);
 		
-        tabPane.getTabs().add(score);
-        tabPane.getTabs().add(gameTab);
+		gameTab.getScoreField().textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> obs, String oldValue, String newValue) {
+		        score.refresh();
+		    }
+		});
+		
+        tabPane.getTabs().addAll(score, gameTab);
         
         VBox vBox = new VBox(tabPane);
 
