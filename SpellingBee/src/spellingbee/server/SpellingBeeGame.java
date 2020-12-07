@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Random;
 
 import spellingbee.client.ISpellingBeeGame;
@@ -117,21 +116,26 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	@Override
 	public int getPointsForWord(String attempt) {
+		
 		int wordLength = attempt.length();
-		if (wordLength < 4) {
-			return 0;
-		}
-		// if it isn't a valid word for the letters you get no points
-		else if (allowedWord(attempt) == false) {
+		// if the word is less than 4 letters long or contains letters that are not allowed
+		// or doesn't include the centerLetter
+		// or the word was already guessed 
+		// or the dictionary does not include that word the user gets 0 points
+		if (wordLength < 4 || allowedWord(attempt) == false || wordsFound.contains(attempt) || !possibleWords.contains(attempt)) {
 			return 0;
 		}
 		else if (wordLength == 4) {
+			this.score += 1;
 			return 1;
 		}
+		// if the word is a panagram the user gets a bonus 7 points
 		else if (checkAttemptContainsAllLetters(attempt)) {
+			this.score += 7 + wordLength;
 			return 7 + wordLength;
 		}
 		else if (wordLength > 4) {
+			this.score += wordLength;
 			return wordLength;
 		}
 		return 0;
@@ -144,7 +148,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 	 */
 	public boolean allowedWord(String word) {
 		for (int i = 0; i < word.length(); i++) {
-			if (allLetters.indexOf(word.charAt(i)) == -1) {
+			if (word.indexOf(centerLetter) == -1 || allLetters.indexOf(word.charAt(i)) == -1) {
 				return false;
 			}
 		}
@@ -180,19 +184,18 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 		if (wordsFound.contains(attempt)) {
 			return "You have already guessed this word";
 		}
-		if (attempt.length() < 4) {
+		else if (attempt.length() < 4) {
 			return "Input word is too short";
 		}
+		else if (attempt.indexOf(centerLetter) == -1){
+			return "Rejected because the center letter isn't included in the input word";
+		}
 		for (String word: possibleWords) {
-			if (attempt.indexOf(centerLetter) == -1) {
-				return "Rejected because the center letter isn't included in the input word";
-			}
-			else if (word.equals(attempt)) {
-				wordsFound.add(word);
+			if (word.equals(attempt)) {
 				return "Good, word exists";
 			}
 		}
-		return "Something broke for: " + attempt;
+		return "This word is not in the given dictionary: " + attempt;
 	}
 	
 	/**
@@ -231,6 +234,7 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 		int maxPoints = 0;
 		for (String word: possibleWords) {
 			maxPoints += getPointsForWord(word);
+			this.score = 0;
 		}
 		int[] brackets = new int[5];
 		brackets[0] = (int) (maxPoints * 0.25);
@@ -239,5 +243,16 @@ public class SpellingBeeGame implements ISpellingBeeGame {
 		brackets[3] = (int) (maxPoints * 0.90);
 		brackets[4] = maxPoints;
 		return brackets;
+	}
+	
+	/**
+	 * This method takes as input the word the user guessed an adds it to the wordsFound hashset
+	 * if the word is allowed by the rules
+	 * @param word the word the user guessed
+	 */
+	public void addGuessedWord(String word) {
+		if (allowedWord(word)) {
+			wordsFound.add(word);
+		}
 	}
 }
