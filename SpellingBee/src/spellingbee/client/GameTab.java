@@ -16,7 +16,7 @@ import javafx.scene.layout.*;
 public class GameTab extends Tab{
 	private Client client;
 	
-	TextField score;
+	private TextField score;
 	/**
 	 * GameTab constructor
 	 * @param Client o is given to GameTab
@@ -57,7 +57,7 @@ public class GameTab extends Tab{
 		String letters=client.sendAndWaitMessage("getAllExceptCenter");
 		String center=client.sendAndWaitMessage("getCenter");
 			
-		for(int i=0;i<letters.length()-1;i++) {
+		for(int i=0;i<letters.length();i++) {
 			Button b=new Button(""+letters.charAt(i));
 			actionButton ab=new actionButton(b);
 			b.setOnAction(ab);
